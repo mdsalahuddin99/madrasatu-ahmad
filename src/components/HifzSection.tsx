@@ -1,83 +1,59 @@
-import React, { useState } from 'react';
-import { Play, Sparkles, BookOpen } from 'lucide-react';
+import React from 'react';
+import { Play, Sparkles } from 'lucide-react';
 
 const HifzSection: React.FC = () => {
-  const [error, setError] = useState(false);
-
   return (
     <section id="hifz" className="py-24 bg-slate-50 relative overflow-hidden">
-      
       <div className="container mx-auto px-5 md:px-6 relative z-10">
         <div className="flex flex-col lg:flex-row gap-16 items-center">
-          
-          <div className="lg:w-1/2 animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-50 border border-gold-200 text-gold-700 text-xs font-bold uppercase tracking-wider mb-6">
+          <div className="lg:w-1/2 space-y-6 animate-fade-in-up">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-xs font-bold tracking-wider">
               <Sparkles size={14} />
-              <span>হিফজুল কুরআ</span>
+              <span>এক নজরে আমাদের অর্জন</span>
             </div>
-            
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6 leading-tight font-serif text-slate-900">
-              গড়ুন আপনার সন্তানকে <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-primary-600">কুরআনের হাফেজ</span>
-            </h2>
-            
-            <p className="text-slate-600 mb-10 leading-relaxed text-lg font-light max-w-xl">
-              আন্তর্জাতিক মানের হাফেজদের তত্ত্বাবধানে পরিচালিত আমাদের হিফজ বিভাগে রয়েছে আধুনিক ও বিজ্ঞানসম্মত পাঠদান পদ্ধতি। আমরা নিশ্চিত করি বিশুদ্ধ তিলাওয়াত এবং আমল আখলাক।
-            </p>
-            
-            <div className="flex flex-wrap gap-4">
-              <button className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
-                ভর্তি তথ্য দেখুন
-              </button>
-              <button className="bg-white hover:bg-slate-50 text-slate-700 px-8 py-4 rounded-2xl font-bold transition-all border border-slate-200 shadow-sm hover:-translate-y-1">
-                সিলেবাস ডাউনলোড
-              </button>
+
+            <div className="space-y-4">
+              <h2 className="text-3xl lg:text-4xl font-bold leading-tight text-slate-900">
+                এক নজরে মাদরাসাতু আহমাদ
+              </h2>
+              <p className="text-slate-600 leading-relaxed text-lg max-w-xl">
+                এই ভিডিওতে সংক্ষেপে মাদরাসাতু আহমাদের পরিবেশ, বিভাগসমূহ, শিক্ষাব্যবস্থা ও
+                আমাদের বিশেষ বৈশিষ্ট্যগুলো তুলে ধরা হয়েছে। আপনার সন্তানের জন্য সিদ্ধান্ত নেওয়ার
+                আগে একবার দেখে নিতে পারেন।
+              </p>
             </div>
           </div>
-          
-          <div className="lg:w-1/2 relative w- w-full animate-scale-in delay-200">
-             {/* Card Style Image Container */}
-             <div className="relative rounded-[3rem] p-4 bg-white border border-slate-100 shadow-2xl">
-                 <div className="relative rounded-[2.5rem] overflow-hidden aspect-[4/3] bg-slate-100">
-                    {!error ? (
-                      <img 
-                        src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                        alt="Quran Reading" 
-                        className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000"
-                        onError={() => setError(true)}
-                      />
-                    ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center bg-primary-50 text-primary-300">
-                         <BookOpen size={64} />
-                         <p className="mt-4 font-serif text-lg">হিফজুল কুরআন</p>
-                      </div>
-                    )}
-                    
-                    {/* Floating Info */}
-                    <div className="absolute bottom-6 left-6 right-6">
-                       <div className="bg-white/90 backdrop-blur-md p-5 rounded-3xl flex items-center gap-4 border border-white shadow-lg">
-                          <div className="w-12 h-12 bg-gold-50 border border-gold-100 rounded-full flex items-center justify-center text-gold-600 shrink-0">
-                             <BookOpen size={24} />
-                          </div>
-                          <div>
-                             <p className="text-slate-400 text-xs font-bold uppercase mb-0.5">বিশেষ বৈশিষ্ট্য</p>
-                             <p className="text-slate-900 font-bold">আন্তর্জাতিক মানসম্পন্ন শিক্ষা</p>
-                          </div>
-                       </div>
-                    </div>
-                    
-                    {/* Play Button */}
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                      <button className="w-20 h-20 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/50 hover:scale-110 transition-transform cursor-pointer shadow-2xl">
-                         <Play size={32} fill="currentColor" />
-                      </button>
-                    </div>
-                 </div>
-             </div>
-             
-             {/* Decorative Elements */}
-             <div className="absolute -top-12 -right-12 w-48 h-48 bg-gold-100 rounded-full blur-3xl pointer-events-none -z-10 opacity-60"></div>
-             <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-primary-100 rounded-full blur-3xl pointer-events-none -z-10 opacity-60"></div>
+
+          <div className="lg:w-1/2 w-full animate-scale-in delay-200">
+            <div className="relative rounded-[2.5rem] bg-slate-900 overflow-hidden shadow-2xl border border-slate-800">
+              <div className="aspect-video">
+                <iframe
+                  src="https://www.youtube.com/embed/ysz5g3c8Hk4"
+                  title="Madrasa introduction video"
+                  className="w-full h-full"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none" />
+
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1">
+                    অফিশিয়াল প্রোমো ভিডিও
+                  </p>
+                  <p className="text-sm md:text-base font-semibold text-white">
+                    এক নজরে মাদরাসাতু আহমাদ
+                  </p>
+                </div>
+                <div className="hidden sm:flex">
+                  <div className="h-12 w-12 rounded-full bg-white/15 border border-white/40 flex items-center justify-center text-white">
+                    <Play size={22} />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

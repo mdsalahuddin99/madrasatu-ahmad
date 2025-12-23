@@ -4,6 +4,7 @@ import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
+import DepartmentDetailsPage from './pages/DepartmentDetailsPage';
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/departments/:id" element={<DepartmentDetailsPage />} />
         </Routes>
       </main>
       <Footer />

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { COURSES } from '../constants';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { Course } from '../types';
@@ -34,7 +35,6 @@ const CourseCard: React.FC<{ course: Course }> = ({ course }) => {
         </div>
       </div>
 
-      {/* Content */}
       <div className="px-4 pb-4 flex flex-col flex-grow z-10">
          <h3 className="text-2xl font-bold text-slate-900 mb-3">{course.title}</h3>
          <p className="text-slate-500 mb-6 line-clamp-3 leading-relaxed">
@@ -42,9 +42,13 @@ const CourseCard: React.FC<{ course: Course }> = ({ course }) => {
          </p>
          
          <div className="mt-auto">
-            <button className="w-full py-4 rounded-2xl bg-white border border-primary-100 text-primary-700 font-bold hover:bg-primary-600 hover:text-white transition-all shadow-sm hover:shadow-lg flex items-center justify-center gap-2 group/btn">
-              {course.cta} <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform"/>
-            </button>
+            <Link
+              to={`/departments/${course.id}`}
+              className="w-full py-4 rounded-2xl bg-white border border-primary-100 text-primary-700 font-bold hover:bg-primary-600 hover:text-white transition-all shadow-sm hover:shadow-lg flex items-center justify-center gap-2 group/btn"
+            >
+              {course.cta}
+              <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
+            </Link>
          </div>
       </div>
     </div>
