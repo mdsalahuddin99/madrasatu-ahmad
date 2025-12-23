@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
     <header className={`fixed w-full top-0 z-50 transition-all duration-500 ${scrolled ? 'py-2' : 'py-3'}`}>
       
       {/* Main Nav Container */}
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6">
         <div className={`
           relative flex justify-between items-center rounded-2xl transition-all duration-500
           ${scrolled 

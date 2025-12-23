@@ -10,13 +10,15 @@ import Gallery from '../components/Gallery';
 const HomePage: React.FC = () => {
   return (
     <>
-      <Gallery />
+    <div className="container mx-auto px-5 md:px-">
+     <Gallery />
       <Hero />
       <Stats />
       <Features />
       <About />
       <Departments />
       <HifzSection />
+      </div>
     </>
   );
 };

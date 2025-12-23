@@ -95,9 +95,9 @@ const Gallery: React.FC = () => {
             </div>
           )}
           
-          <div className="absolute bottom-0 left-0 p-8 md:p-12 w-30 pointer-events-none">
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-4 md:p-6 rounded-3xl max-w-xl">
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{GALLERY_IMAGES[currentIndex].caption}</h3>
+          <div className="absolute bottom-0 left-0 p-8 md:p-12 w-100 pointer-events-none">
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-4  rounded-3xl max-w-xl">
+              <h3 className="text-xl  font-bold text-white">{GALLERY_IMAGES[currentIndex].caption}</h3>
              
             </div>
           </div>
