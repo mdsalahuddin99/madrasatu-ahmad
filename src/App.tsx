@@ -5,6 +5,7 @@ import Footer from './components/Layout/Footer';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import DepartmentDetailsPage from './pages/DepartmentDetailsPage';
+import MediaGalleryPage from './pages/MediaGalleryPage';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/departments/:id" element={<DepartmentDetailsPage />} />
+          <Route path="/gallery" element={<MediaGalleryPage />} />
         </Routes>
       </main>
       <Footer />

@@ -78,6 +78,26 @@ const DepartmentDetailsPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 py-10 mt-12 md:py-16">
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
+        <section className="rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-xl mb-6">
+          <div className="relative h-48 md:h-64 lg:h-72">
+            <img
+              src={course.image}
+              alt={course.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+              <div>
+                <p className="text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1">
+                  বিভাগ পরিচিতি
+                </p>
+                <p className="text-sm md:text-base font-semibold text-white">
+                  {course.title}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
         <div className="mb-6 flex items-center justify-between gap-4">
           <Link
             to="/#departments"
@@ -240,7 +260,6 @@ const DepartmentDetailsPage: React.FC = () => {
             </section>
           </div>
 
-         
         </div>
       </div>
     </div>

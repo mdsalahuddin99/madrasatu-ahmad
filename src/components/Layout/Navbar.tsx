@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
             </div>
             
             <button className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-all shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 hover:-translate-y-0.5 active:translate-y-0">
-              ভর্তি তথ্য
+              ভর্তি আবেদন
             </button>
           </nav>
 

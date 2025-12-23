@@ -15,9 +15,7 @@ import { NavItem, Feature, Course, Stat, GalleryImage } from './types';
 export const NAV_ITEMS: NavItem[] = [
   { label: 'হোম', href: '#home' },
   { label: 'আমাদের সম্পর্কে', href: '/about' },
-  { label: 'বিভাগসমূহ', href: '#departments' },
-  { label: 'হিফজ বিভাগ', href: '#hifz' },
-  { label: 'গ্যালারি', href: '#gallery' },
+  { label: 'গ্যালারি', href: '/gallery' },
 ];
 
 export const FEATURES: Feature[] = [
