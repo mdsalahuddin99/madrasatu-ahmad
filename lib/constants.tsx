@@ -4,9 +4,9 @@ import { Zap, Camera, Dribbble, Home, Droplet, ShieldCheck, Users, GraduationCap
 export const NAV_ITEMS: NavItem[] = [
     { label: 'প্রচ্ছদ', href: '/' },
     { label: 'আমাদের সম্পর্কে', href: '/about' },
-    { label: 'বিভাগসমূহ', href: '/#departments' },
+    { label: 'বিভাগসমূহ', href: '/departments' },
     { label: 'গ্যালারি', href: '/gallery' },
-    { label: 'যোগাযোগ', href: '/#contact' },
+    { label: 'যোগাযোগ', href: '/contact' },
 ];
 
 export const COURSES: Course[] = [
@@ -109,25 +109,25 @@ export const FEATURES = [
 export const STATS = [
     {
         id: 1,
-        value: '৫০০+',
+        value: '500+',
         label: 'শিক্ষার্থী',
         icon: Users,
     },
     {
         id: 2,
-        value: '৫০+',
+        value: '50+',
         label: 'শিক্ষক',
         icon: GraduationCap,
     },
     {
         id: 3,
-        value: '১৫+',
+        value: '15+',
         label: 'বছরের অভিজ্ঞতা',
         icon: BookOpen,
     },
     {
         id: 4,
-        value: '১০০%',
+        value: '100%',
         label: 'পাসের হার',
         icon: Trophy,
     },

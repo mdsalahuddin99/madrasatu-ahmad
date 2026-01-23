@@ -13,12 +13,11 @@ export default function Home() {
         <>
             <Hero />
             <Stats />
-            <Features />
             <About />
+            <Features />
             <Departments />
             <HifzSection />
             <Gallery />
-            <Contact />
         </>
     );
 }

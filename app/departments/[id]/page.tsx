@@ -1,191 +1,262 @@
-import React, { use } from 'react';
+'use client';
+import React, { use, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { COURSES } from '@/lib/constants';
-import { CheckCircle2, Star, Users } from 'lucide-react';
+import {
+    Clock,
+    Users,
+    Award,
+    CheckCircle2,
+    ChevronDown,
+    Download,
+    Phone,
+    MapPin,
+    BookOpen,
+    Wifi,
+    Video,
+    Library,
+    Utensils,
+    Activity
+} from 'lucide-react';
 
 export default function DepartmentDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params);
     const numericId = Number(id);
     const course = COURSES.find((item) => item.id === numericId) ?? COURSES[0];
 
-    const details =
-        numericId === 2
-            ? {
-                badge: 'হিফজুল কুরআন বিভাগ',
-                subtitle: 'নিয়মিত মুরাজআ ও শুদ্ধ তাজবীদসহ হিফজ প্রোগ্রাম',
-                learn: [
-                    'পুরো কুরআন শরীফ সাবলীলভাবে হিফজ',
-                    'তাজবীদ ও কিরাতের বুনিয়াদি শিক্ষা',
-                    'হিফজ ধরে রাখার জন্য নিয়মিত মুরাজআ প্ল্যান',
-                    'আদব, আখলাক ও ইসলামী চরিত্র গঠন',
-                ],
-                meta: [
-                    { label: 'কোর্স মেয়াদ', value: '৩-৪ বছর (ধারাবাহিক হিফজ পরিকল্পনা অনুযায়ী)' },
-                    { label: 'ক্লাস টাইম', value: 'ফুল-টাইম আবাসিক' },
-                    { label: 'সেশন টাইপ', value: 'ব্যক্তিগত তত্ত্বাবধান ও মুরাজআ' },
-                    { label: 'আসন সংখ্যা', value: 'সীমিত আসন · ব্যাচ ভিত্তিক' },
-                ],
-                highlights: [
-                    'যারা পুরো কুরআন হিফজ করতে চায়',
-                    'পরিপূর্ণ তত্ত্বাবধান ও শুদ্ধ তাজবীদ চান এমন পরিবার',
-                    'হিফজ পরবর্তী জীবনে আমলীভাবে কুরআনকে ধারণ করতে চায়',
-                ],
-            }
-            : numericId === 3
-                ? {
-                    badge: 'নূরানী ও নাজেরা বিভাগ',
-                    subtitle: 'শিশুদের জন্য সহীহ কুরআন পড়ার মজবুত ভিত্তি',
-                    learn: [
-                        'আরবি হরফ, মাখরাজ ও সঠিক উচ্চারণ',
-                        'নূরানী কায়দা ও কুরআন নাজেরা সম্পন্ন',
-                        'দৈনন্দিন দোআ, মাসনূন আমল ও নামাজ শিখন',
-                        'হালাল-হারাম ও আদব সম্পর্কে প্রাথমিক ধারণা',
-                    ],
-                    meta: [
-                        { label: 'কোর্স মেয়াদ', value: '২-৩ বছর (শিশুর মান অনুযায়ী)' },
-                        { label: 'ক্লাস টাইম', value: 'ডে কেয়ার/রেসিডেনশিয়াল' },
-                        { label: 'বয়স', value: '৪+ বছর থেকে উপরে' },
-                        { label: 'ফোকাস', value: 'শুদ্ধ উচ্চারণ ও আদব শেখানো' },
-                    ],
-                    highlights: [
-                        'যারা সন্তানকে ছোটবেলা থেকেই সহীহ কুরআন শিখাতে চান',
-                        'স্কুলগামী শিশুদের জন্য ভারসাম্যপূর্ণ দ্বীনি শিক্ষা',
-                        'বেসিক আকীদা ও ইসলামী আদব গড়ে তুলতে আগ্রহী পরিবার',
-                    ],
-                }
-                : {
-                    badge: 'কিতাব বিভাগ',
-                    subtitle: 'আলিমিয়্যাত ও দাওরায়ে হাদীসের প্রস্তুতিকেন্দ্রিক পড়াশোনা',
-                    learn: [
-                        'আরবি ব্যাকরণ, ফিকহ, আকিদা ও তাফসীরের ভিত্তি',
-                        'কিতাব বোঝার দক্ষতা ও তদরুস সংস্কৃতি',
-                        'দাওয়াহ, নেতৃত্ব ও দায়িত্ববোধের প্রশিক্ষণ',
-                        'সমসাময়িক বিষয়ের সাথে শরিয়াহর সমন্বয়',
-                    ],
-                    meta: [
-                        { label: 'কোর্স মেয়াদ', value: '৪-৬ বছর (স্তরভিত্তিক)' },
-                        { label: 'ক্লাস টাইম', value: 'ফুল-টাইম মাদ্রাসা ক্লাস' },
-                        { label: 'প্রয়োজনীয়তা', value: 'হিফজ/নাজেরা সম্পন্ন ও বেসিক জ্ঞান' },
-                        { label: 'পরবর্তী ধাপ', value: 'দাওরায়ে হাদীস ও উচ্চতর ইসলামিক স্টাডিজ' },
-                    ],
-                    highlights: [
-                        'যারা আলিমিয়্যাত পড়ে দ্বীনি খেদমতে যুক্ত হতে চায়',
-                        'আরবি ভাষা ও শরিয়াহতে গভীর জ্ঞান অর্জন করতে ইচ্ছুক',
-                        'দৃষ্টিভঙ্গি ও চরিত্র গঠনে ভারসাম্য খোঁজেন এমন শিক্ষার্থী',
-                    ],
-                };
+    // Mock Data Generator based on ID
+    const getDetails = (id: number) => {
+        const commonDefaults = {
+            routine: [
+                { time: '০৪:৩০ - ০৫:০০', activity: 'ফজর ও তেলাওয়াত' },
+                { time: '০৫:০০ - ০৬:৩০', activity: 'মর্নিং ক্লাস / সবক' },
+                { time: '০৬:৩০ - ০৭:৩০', activity: 'নাস্তা ও বিশ্রাম' },
+                { time: '০৭:৩০ - ১১:৩০', activity: 'ক্লাস ও প্র্যাকটিস' },
+                { time: '১১:৩০ - ১২:৩০', activity: 'গোসল ও জোহরের প্রস্তুতি' },
+                { time: '০২:৩০ - ০৪:৩০', activity: 'দুপুরের ক্লাস' },
+                { time: '০৫:০০ - মাগরিব', activity: 'বিকালের খেলাধুলা / শরীরচর্চা' },
+                { time: 'মাগরিব - এশা', activity: 'রিভিশন ক্লাস' },
+            ],
+            facilities: [
+                { icon: Library, label: 'সমৃদ্ধ লাইব্রেরি' },
+                { icon: Wifi, label: 'ডিজিটাল জোন' },
+                { icon: Video, label: 'সিসিটিভি নিরাপত্তা' },
+                { icon: Utensils, label: 'পুষ্টিকর খাবার' },
+                { icon: Activity, label: 'প্রাথমিক চিকিৎসা' },
+                { icon: BookOpen, label: 'ব্যক্তিগত রিডিং ডেস্ক' },
+            ],
+            faqs: [
+                { q: 'ভর্তির জন্য কি কি যোগ্যতা প্রয়োজন?', a: 'শিক্ষার্থীর বয়স এবং মেধা যাচাই পরীক্ষার মাধ্যমে ভর্তি নেওয়া হয়।' },
+                { q: 'আবাসিক সুবিধা কেমন?', a: 'আমাদের রয়েছে উন্নতমানের আবাসিক ব্যবস্থা, যেখানে ছাত্রদের পড়াশোনা ও থাকার সুব্যবস্থা রয়েছে।' },
+                { q: 'অভিভাবকরা কখন দেখা করতে পারবেন?', a: 'সপ্তাহের নির্দিষ্ট দিনে এবং বিশেষ প্রয়োজনে কর্তৃপক্ষের অনুমতি সাপেক্ষে দেখা করা যাবে।' },
+            ]
+        };
+
+        if (id === 2) { // Hifz
+            return {
+                ...commonDefaults,
+                badge: 'হিফজুল কুরআন',
+                subtitle: 'আন্তর্জাতিক মানের হাফেজ গড়ার লক্ষ্যে',
+                stats: [
+                    { icon: Clock, label: 'কোর্স মেয়াদ', value: '৩-৪ বছর' },
+                    { icon: Users, label: 'মোট আসন', value: '৫০ জন' },
+                    { icon: Award, label: 'যোগ্যতা', value: 'নাজেরা পাস' },
+                ]
+            };
+        } else if (id === 3) { // Nurani
+            return {
+                ...commonDefaults,
+                badge: 'নূরানী বিভাগ',
+                subtitle: 'সহীহ কুরআন শিক্ষার মজবুত ভিত্তি',
+                stats: [
+                    { icon: Clock, label: 'কোর্স মেয়াদ', value: '২ বছর' },
+                    { icon: Users, label: 'মোট আসন', value: '৬০ জন' },
+                    { icon: Award, label: 'বয়স', value: '৫+ বছর' },
+                ]
+            };
+        }
+        // Kitab (Default)
+        return {
+            ...commonDefaults,
+            badge: 'কিতাব বিভাগ',
+            subtitle: 'আলেম ও দ্বীনি লিডার তৈরির কারখানা',
+            stats: [
+                { icon: Clock, label: 'কোর্স মেয়াদ', value: '১০ বছর' },
+                { icon: Users, label: 'মোট আসন', value: '৪০ জন' },
+                { icon: Award, label: 'যোগ্যতা', value: 'অষ্টম শ্রেণি/হিফজ' },
+            ]
+        };
+    };
+
+    const details = getDetails(numericId);
 
     return (
-        <div className="min-h-screen bg-slate-50 py-10 mt-12 md:py-16">
-            <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
-                <section className="rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-xl mb-6">
-                    <div className="relative h-48 md:h-64 lg:h-72">
-                        <img
-                            src={course.image}
-                            alt={course.title}
-                            className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
-                        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+        <div className="min-h-screen bg-[#F9FAFB] pt-24 pb-20">
+            {/* Header / Hero Section */}
+            <div className="container-custom mb-16">
+                <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    {/* Left Content */}
+                    <div className="space-y-6 animate-fade-in order-2 lg:order-1 text-center lg:text-left">
+                        <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-sm font-bold tracking-wider uppercase">
+                            {details.badge}
+                        </div>
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-slate-900 leading-tight">
+                            {course.title}
+                        </h1>
+                        <p className="text-lg text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                            {details.subtitle}। আমরা নিশ্চিত করি আধুনিক ও দ্বীনি শিক্ষার এক অপূর্ব সমন্বয় যা আপনার সন্তানকে গড়ে তুলবে একজন আদর্শ মানুষ হিসেবে।
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                            <Link href="/admission" className="btn-primary">
+                                ভর্তি হোন
+                            </Link>
+                            <Link href="/#contact" className="btn-secondary">
+                                যোগাযোগ করুন
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Right Image */}
+                    <div className="relative order-1 lg:order-2 animate-scale-in">
+                        <div className="rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white aspect-[4/3] relative">
+                            <Image
+                                src={course.image}
+                                alt={course.title}
+                                fill
+                                className="object-cover"
+                            />
+                            {/* Overlay Gradient */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/40 via-transparent to-transparent"></div>
+                        </div>
+                        {/* Decorative Elements */}
+                        <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-gold-400 rounded-full blur-2xl opacity-40"></div>
+                        <div className="absolute -top-6 -right-6 w-32 h-32 bg-emerald-500 rounded-full blur-3xl opacity-30"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="container-custom">
+                {/* Quick Info Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 relative z-10 -mt-8 lg:-mt-0">
+                    {details.stats.map((stat, idx) => (
+                        <div key={idx} className="card-premium flex items-center gap-4 bg-white/80 backdrop-blur-sm border-l-4 border-l-emerald-500">
+                            <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                                <stat.icon size={24} />
+                            </div>
                             <div>
-                                <p className="text-xs font-semibold text-slate-200 uppercase tracking-wide mb-1">
-                                    বিভাগ পরিচিতি
-                                </p>
-                                <p className="text-sm md:text-base font-semibold text-white">
-                                    {course.title}
-                                </p>
+                                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">{stat.label}</p>
+                                <p className="text-lg font-heading font-bold text-slate-900">{stat.value}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="grid lg:grid-cols-[1fr_350px] gap-10 items-start">
+                    {/* Main Content Area */}
+                    <div className="space-y-12">
+
+                        {/* Daily Routine */}
+                        <section className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+                            <h2 className="text-2xl font-heading font-bold text-slate-900 mb-6 flex items-center gap-2">
+                                <Clock className="text-emerald-600" />
+                                প্রাত্যহিক রুটিন
+                            </h2>
+                            <div className="relative border-l-2 border-emerald-100 ml-3 space-y-6">
+                                {details.routine.map((item, idx) => (
+                                    <div key={idx} className="relative pl-8 group">
+                                        <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-4 border-emerald-200 group-hover:border-emerald-500 transition-colors"></div>
+                                        <div className="bg-slate-50 rounded-xl p-4 transition-all hover:bg-emerald-50/50">
+                                            <p className="text-sm font-bold text-emerald-700 mb-1">{item.time}</p>
+                                            <p className="text-slate-700 font-medium">{item.activity}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* Special Facilities */}
+                        <section>
+                            <h2 className="text-2xl font-heading font-bold text-slate-900 mb-6 flex items-center gap-2">
+                                <Award className="text-emerald-600" />
+                                বিশেষ সুবিধাসমূহ
+                            </h2>
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                {details.facilities.map((facility, idx) => (
+                                    <div key={idx} className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all text-center group">
+                                        <facility.icon size={32} className="text-slate-400 group-hover:text-emerald-600 mb-3 transition-colors" />
+                                        <span className="font-semibold text-slate-700">{facility.label}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* FAQ Accordion */}
+                        <section className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+                            <h2 className="text-2xl font-heading font-bold text-slate-900 mb-6">সচরাচর জিজ্ঞাসা</h2>
+                            <div className="space-y-3">
+                                {details.faqs.map((faq, idx) => (
+                                    <FAQItem key={idx} question={faq.q} answer={faq.a} />
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+
+                    {/* Sticky Sidebar */}
+                    <div className="hidden lg:block sticky top-28 space-y-6">
+                        <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100 text-center">
+                            <h3 className="text-xl font-bold text-slate-900 mb-2">ভর্তি তথ্য</h3>
+                            <p className="text-slate-500 text-sm mb-6">আসন সংখ্যা সীমিত, আজই যোগাযোগ করুন</p>
+
+                            <div className="space-y-4">
+                                <a href="tel:+8801962423632" className="flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-emerald-50 text-emerald-700 font-bold hover:bg-emerald-100 transition-colors">
+                                    <Phone size={20} />
+                                    <span>01962 423632</span>
+                                </a>
+                                <button className="flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                                    <Download size={20} />
+                                    <span>ভর্তি ফরম ডাউনলোড</span>
+                                </button>
+                            </div>
+
+                            <hr className="my-6 border-slate-100" />
+
+                            <div className="text-left space-y-3">
+                                <div className="flex items-start gap-3">
+                                    <MapPin size={18} className="text-slate-400 mt-1 shrink-0" />
+                                    <span className="text-sm text-slate-600">যাত্রাবাড়ী, ঢাকা-১২০৪</span>
+                                </div>
+                                <div className="flex items-start gap-3">
+                                    <Clock size={18} className="text-slate-400 mt-1 shrink-0" />
+                                    <span className="text-sm text-slate-600">অফিস: সকাল ৮টা - বিকাল ৫টা</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </section>
-                <div className="mb-6 flex items-center justify-between gap-4">
-                    <Link
-                        href="/#departments"
-                        className="inline-flex items-center text-sm font-medium text-slate-600 hover:text-emerald-700"
-                    >
-                        <span className="mr-2">←</span>
-                        সব বিভাগে ফিরে যান
-                    </Link>
-                    <div className="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-[11px] font-semibold text-slate-700 tracking-wide shadow-sm">
-                        <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                        <span>ভর্তি চলছে · সীমিত সীট</span>
-                    </div>
                 </div>
+            </div>
+        </div>
+    );
+}
 
-                <div className="grid gap-10 lg:grid-cols-[2fr,1fr] items-start">
-                    <div className="space-y-10">
-                        <section className="space-y-5 bg-white border border-slate-200 rounded-2xl px-6 py-6 md:px-8 md:py-7 shadow-sm">
-                            <p className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold tracking-wide text-emerald-700">
-                                {details.badge}
-                            </p>
-                            <div className="space-y-3">
-                                <h1 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
-                                    {course.title}
-                                </h1>
-                                <p className="text-slate-600 text-base md:text-lg max-w-2xl">{details.subtitle}</p>
-                            </div>
-                            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600 mt-4">
-                                <div className="flex items-center gap-1">
-                                    <div className="flex text-gold-500">
-                                        <Star size={16} fill="currentColor" />
-                                        <Star size={16} fill="currentColor" />
-                                        <Star size={16} fill="currentColor" />
-                                        <Star size={16} fill="currentColor" />
-                                        <Star size={16} className="text-gold-300" />
-                                    </div>
-                                    <span className="font-semibold text-slate-900 ml-1">4.9</span>
-                                    <span>(শতাধিক সন্তুষ্ট অভিভাবক)</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <Users size={16} className="text-slate-400" />
-                                    <span>অনেক শিক্ষার্থী অধ্যয়নরত</span>
-                                </div>
-                            </div>
-                            <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                                {details.meta.map((item) => (
-                                    <div
-                                        key={item.label}
-                                        className="rounded-xl bg-slate-50 border border-slate-200 px-4 py-3"
-                                    >
-                                        <p className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">
-                                            {item.label}
-                                        </p>
-                                        <p className="mt-1 text-sm font-semibold text-slate-900 leading-snug">
-                                            {item.value}
-                                        </p>
-                                    </div>
-                                ))}
-                            </div>
-                        </section>
+// Helper Component for FAQ Accordion
+function FAQItem({ question, answer }: { question: string, answer: string }) {
+    const [isOpen, setIsOpen] = useState(false);
 
-                        <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-7">
-                            <h2 className="text-xl font-semibold text-slate-900 mb-4">
-                                এই বিভাগে যা যা শিখবে
-                            </h2>
-                            <div className="grid md:grid-cols-2 gap-4 text-sm md:text-base">
-                                {details.learn.map((item) => (
-                                    <div
-                                        key={item}
-                                        className="flex items-start gap-3 rounded-2xl bg-slate-50 px-4 py-3 border border-slate-100"
-                                    >
-                                        <div className="mt-0.5 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
-                                            <CheckCircle2 size={16} />
-                                        </div>
-                                        <p className="text-slate-700 leading-relaxed">{item}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </section>
-
-                        <section className="flex flex-col sm:flex-row gap-4">
-                            <Link href="/admission" className="btn-primary flex items-center justify-center gap-2 px-10">
-                                ভর্তি আবেদন করুন
-                            </Link>
-                            <Link href="/#contact" className="btn-secondary flex items-center justify-center gap-2 px-10">
-                                যোগাযোগ করুন
-                            </Link>
-                        </section>
-                    </div>
+    return (
+        <div className="border border-slate-200 rounded-xl overflow-hidden">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 transition-colors text-left"
+            >
+                <span className="font-semibold text-slate-900">{question}</span>
+                <ChevronDown size={20} className={`text-slate-500 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+            </button>
+            <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}
+            >
+                <div className="p-4 bg-white text-slate-600 text-sm leading-relaxed border-t border-slate-100">
+                    {answer}
                 </div>
             </div>
         </div>

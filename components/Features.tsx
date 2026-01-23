@@ -41,7 +41,7 @@ const Features: React.FC = () => {
 
   return (
     <section className="py-10 bg-white overflow-hidden">
-      <div className="container mx-auto px-5 md:px-6">
+      <div className="container-custom">
 
         {/* Header with Image Layout */}
         <div className="flex  lg:flex-row items-center gap-12 lg:gap-20 mb-20">

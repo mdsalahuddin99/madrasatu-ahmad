@@ -1,181 +1,123 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Camera, Maximize2, X, Image as ImageIcon } from 'lucide-react';
+import React from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { Camera } from 'lucide-react';
 import { GALLERY_IMAGES } from '@/lib/constants';
 
 const Gallery: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [failedImages, setFailedImages] = useState<Record<number, boolean>>({});
-
-  // Auto-play functionality (pauses when lightbox is open)
-  useEffect(() => {
-    if (isLightboxOpen) return;
-
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [currentIndex, isLightboxOpen]);
-
-  // Keyboard navigation for lightbox
-  useEffect(() => {
-    if (!isLightboxOpen) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsLightboxOpen(false);
-      if (e.key === 'ArrowLeft') prevSlide();
-      if (e.key === 'ArrowRight') nextSlide();
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isLightboxOpen, currentIndex]);
-
-  const prevSlide = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? GALLERY_IMAGES.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-  };
-
-  const nextSlide = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    const isLastSlide = currentIndex === GALLERY_IMAGES.length - 1;
-    const newIndex = isLastSlide ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-  };
-
-  const goToSlide = (slideIndex: number) => {
-    setCurrentIndex(slideIndex);
-  };
-
-  const handleImageError = (index: number) => {
-    setFailedImages(prev => ({ ...prev, [index]: true }));
-  };
-
-  const currentImageFailed = failedImages[currentIndex];
+  // Extract images for the marquee (using a larger set by duplicating for seamless loop)
+  const marqueeImages = [...GALLERY_IMAGES, ...GALLERY_IMAGES, ...GALLERY_IMAGES];
 
   return (
-    <section id="gallery" className="pt-36 bg-white overflow-hidden">
-      <div className="container mx-auto px-6">
-
-
-        {/* Cinematic Display */}
-        <div
-          className="relative h-[400px] md:h-[600px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl group cursor-pointer bg-slate-100"
-          onClick={() => !currentImageFailed && setIsLightboxOpen(true)}
-        >
-          {!currentImageFailed ? (
-            <>
-              <div
-                style={{ backgroundImage: `url(${GALLERY_IMAGES[currentIndex].url})` }}
-                className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-in-out transform group-hover:scale-105"
-              ></div>
-              {/* Hidden img to catch errors for background image */}
-              <img
-                src={GALLERY_IMAGES[currentIndex].url}
-                className="hidden"
-                onError={() => handleImageError(currentIndex)}
-                alt="hidden check"
-              />
-            </>
-          ) : (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-200 text-slate-400">
-              <ImageIcon size={64} />
-              <p className="mt-4 font-medium">ইমেজ লোড করা যায়নি</p>
-            </div>
-          )}
-
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
-
-          {/* Maximize Icon Overlay */}
-          {!currentImageFailed && (
-            <div className="absolute top-8 right-8 bg-white/20 backdrop-blur-md p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white hover:text-slate-900 z-30">
-              <Maximize2 size={24} />
-            </div>
-          )}
-
-          <div className="absolute bottom-0 left-0 p-8 md:p-12 w-100 pointer-events-none">
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-4  rounded-3xl max-w-xl">
-              <h3 className="text-xl  font-bold text-white">{GALLERY_IMAGES[currentIndex].caption}</h3>
-
-            </div>
+    <section id="gallery" className="py-20 lg:py-28 bg-white overflow-hidden">
+      <div className="container-custom">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-800 text-sm font-bold uppercase tracking-wider mb-6 shadow-sm">
+            <Camera size={16} />
+            <span>আমাদের গ্যালারি</span>
           </div>
+          <h2 className="text-3xl md:text-5xl font-heading font-bold text-slate-900 mb-6">
+            মাদরাসার <span className="text-emerald-700">মনোরম দৃশ্য</span>
+          </h2>
+          <p className="text-lg text-slate-600 leading-relaxed">
+            আমাদের শিক্ষা কার্যক্রম এবং ক্যাম্পাসের কিছু স্থিরচিত্র।
+          </p>
         </div>
 
-        {/* Thumbnail Strip */}
-        <div className="flex gap-4 mt-16 overflow-x-auto pb-4 no-scrollbar">
-          {GALLERY_IMAGES.map((img, idx) => (
-            <div
-              key={img.id}
-              onClick={() => goToSlide(idx)}
-              className={`relative min-w-[100px] md:min-w-[120px] h-20 md:h-24 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 flex-shrink-0 bg-slate-200 ${currentIndex === idx ? 'ring-4 ring-primary-500 ring-offset-2' : 'opacity-60 hover:opacity-100'
-                }`}
-            >
-              {!failedImages[idx] ? (
-                <img
+        {/* 1. Gallery Grid Style (Top Section) */}
+        <div className="space-y-6 mb-20 px-4 md:px-0">
+          {/* First Row: 3 Images (Responsive: 2 columns on mobile, 3 on lg) */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+            {GALLERY_IMAGES.slice(0, 3).map((img, idx) => (
+              <motion.div
+                key={`row1-${idx}`}
+                whileHover={{ scale: 1.03 }}
+                className="relative aspect-[4/3] rounded-md overflow-hidden shadow-md group cursor-pointer"
+              >
+                <Image
                   src={img.url}
-                  alt="thumb"
-                  className="w-full h-full object-cover"
-                  onError={() => handleImageError(idx)}
+                  alt={img.caption}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-slate-400">
-                  <ImageIcon size={24} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <p className="font-bold text-sm">{img.caption}</p>
+                  </div>
                 </div>
-              )}
-            </div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Second Row: 2 Images (Responsive: 1 column on mobile or keep 2?) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {GALLERY_IMAGES.slice(3, 5).map((img, idx) => (
+              <motion.div
+                key={`row2-${idx}`}
+                whileHover={{ scale: 1.02 }}
+                className="relative aspect-[16/7] rounded-md overflow-hidden shadow-md group cursor-pointer"
+              >
+                <Image
+                  src={img.url}
+                  alt={img.caption}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-6 left-6 text-white text-lg font-bold">
+                    <p>{img.caption}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Lightbox Modal */}
-      {isLightboxOpen && !currentImageFailed && (
-        <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 transition-all duration-300 animate-in fade-in zoom-in-95">
-          {/* Close Button */}
-          <button
-            onClick={() => setIsLightboxOpen(false)}
-            className="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all z-50"
+      {/* 2. Image Marquee Section (Bottom Section) */}
+      <div className="relative py-12 bg-slate-50 border-y border-slate-100 mt-10">
+        <div className="flex overflow-hidden group">
+          <motion.div
+            className="flex whitespace-nowrap gap-6"
+            animate={{
+              x: [0, "-50%"],
+            }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 40,
+                ease: "linear",
+              },
+            }}
+            style={{ display: "flex", width: "fit-content" }}
           >
-            <X size={28} />
-          </button>
-
-          {/* Navigation */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-4 rounded-full transition-all z-50 hover:scale-110"
-          >
-            <ChevronLeft size={32} />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-4 rounded-full transition-all z-50 hover:scale-110"
-          >
-            <ChevronRight size={32} />
-          </button>
-
-          {/* Main Image Container */}
-          <div
-            className="relative max-w-7xl w-full h-full flex flex-col items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={GALLERY_IMAGES[currentIndex].url}
-              alt={GALLERY_IMAGES[currentIndex].caption}
-              className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl animate-in fade-in zoom-in-90 duration-300"
-            />
-            <div className="mt-6 text-center">
-              <h3 className="text-white/90 text-xl md:text-2xl font-bold font-sans">
-                {GALLERY_IMAGES[currentIndex].caption}
-              </h3>
-              <p className="text-white/50 text-sm mt-2">
-                {currentIndex + 1} / {GALLERY_IMAGES.length}
-              </p>
-            </div>
-          </div>
+            {/* Double the images for seamless loop */}
+            {[...marqueeImages, ...marqueeImages].map((img, idx) => (
+              <div
+                key={`marquee-${idx}`}
+                className="relative w-64 h-40 md:w-80 md:h-48 rounded-xl overflow-hidden shadow-md flex-shrink-0 border-2 border-white transform transition-transform hover:scale-105 duration-300"
+              >
+                <Image
+                  src={img.url}
+                  alt={img.caption}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </motion.div>
         </div>
-      )}
+      </div>
+
+      <style jsx global>{`
+        #gallery .group:hover .motion-div, 
+        #gallery .group:hover > div {
+          animation-play-state: paused !important;
+        }
+      `}</style>
     </section>
   );
 };

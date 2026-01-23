@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, BookOpen, GraduationCap, BookMarked, Library } from 'lucide-react';
 
 interface Course {
@@ -39,21 +40,18 @@ const ICONS = [GraduationCap, BookMarked, Library];
 
 const CourseCard: React.FC<{ course: Course; index: number }> = ({ course, index }) => {
   const [error, setError] = useState(false);
-  const Icon = ICONS[index % ICONS.length];
 
   return (
-    <div className="group card-premium relative overflow-hidden h-full flex flex-col">
-
-      {/* Decorative Background Gradient */}
-      <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-emerald-100/50 to-transparent rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+    <div className="group bg-white rounded-md border border-slate-200 p-5 transition-all duration-300 hover:shadow-xl flex flex-col h-full ring-1 ring-slate-100">
 
       {/* Image Container */}
-      <div className="h-56 rounded-2xl overflow-hidden relative mb-6 shrink-0 shadow-md">
+      <div className="h-48 rounded-md overflow-hidden relative mb-5 shrink-0">
         {!error ? (
-          <img
+          <Image
             src={course.image}
             alt={course.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
             onError={() => setError(true)}
           />
         ) : (
@@ -61,29 +59,26 @@ const CourseCard: React.FC<{ course: Course; index: number }> = ({ course, index
             <BookOpen size={48} />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-
-        {/* Icon Badge on Image */}
-        <div className="absolute top-4 left-4 w-14 h-14 glass rounded-2xl flex items-center justify-center text-emerald-700 shadow-lg">
-          <Icon size={24} />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
       </div>
 
       {/* Content */}
       <div className="flex flex-col flex-grow relative z-10">
-        <h3 className="text-2xl font-heading font-bold text-slate-900 mb-3">{course.title}</h3>
-        <p className="text-slate-600 mb-6 line-clamp-3 leading-relaxed flex-grow">
+        <h3 className="text-xl font-heading font-bold text-slate-900 mb-2 leading-tight">{course.title}</h3>
+        <p className="text-slate-500 mb-6 line-clamp-2 text-sm leading-relaxed flex-grow">
           {course.description}
         </p>
 
-        {/* CTA Button */}
-        <Link
-          href={`/departments/${course.id}`}
-          className="group/btn w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold shadow-lg shadow-emerald-600/30 hover:shadow-xl hover:shadow-emerald-600/50 transition-all flex items-center justify-center gap-2"
-        >
-          <span>{course.cta}</span>
-          <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
-        </Link>
+        {/* CTA Button - Smaller and Left Aligned */}
+        <div className="mt-auto">
+          <Link
+            href={`/departments/${course.id}`}
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-all shadow-sm hover:shadow-md"
+          >
+            <span>{course.cta}</span>
+            <ArrowRight size={16} />
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -105,7 +100,7 @@ const Departments: React.FC = () => {
             <BookOpen size={16} />
             <span>একাডেমিক কার্যক্রম</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-slate-900 mb-6">
+          <h2 className="text-3xl md:text-5xl font-heading font-bold text-slate-900 mb-6">
             আমাদের বিভাগসমূহ
           </h2>
           <p className="text-lg text-slate-600 leading-relaxed">
