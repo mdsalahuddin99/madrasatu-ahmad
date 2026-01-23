@@ -14,6 +14,8 @@ import {
     X,
     LogOut
 } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
 
 const sidebarItems = [
     { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
@@ -24,16 +26,13 @@ const sidebarItems = [
     { label: 'Settings', href: '/admin/settings', icon: Settings },
 ];
 
-import { createClient } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
-
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const pathname = usePathname();
     const router = useRouter();
-    const supabase = createClient();
 
     const handleLogout = async () => {
+        const supabase = createClient();
         await supabase.auth.signOut();
         router.push('/login');
         router.refresh();
