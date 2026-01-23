@@ -1,6 +1,6 @@
 import { Users, GraduationCap, BookOpen, UserPlus, ArrowUpRight } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
+
 
 export default function AdminDashboard() {
     return (
