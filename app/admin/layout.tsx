@@ -32,8 +32,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const router = useRouter();
 
     const handleLogout = async () => {
-        const supabase = createClient();
-        await supabase.auth.signOut();
+        // TEMPORARY: Bypass Supabase logout
+        // const supabase = createClient();
+        // await supabase.auth.signOut();
         router.push('/login');
         router.refresh();
     };

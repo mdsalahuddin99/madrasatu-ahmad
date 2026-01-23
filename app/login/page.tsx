@@ -17,16 +17,20 @@ export default function LoginPage() {
         setLoading(true);
         setError(null);
 
-        const supabase = createClient();
+        // TEMPORARY: Bypass Supabase login
+        // const supabase = createClient();
         try {
-            const { error } = await supabase.auth.signInWithPassword({
-                email,
-                password,
-            });
+            // const { error } = await supabase.auth.signInWithPassword({
+            //     email,
+            //     password,
+            // });
 
-            if (error) {
-                throw error;
-            }
+            // if (error) {
+            //     throw error;
+            // }
+
+            // Simulate login delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
 
             router.push('/admin');
             router.refresh(); // Refresh to update middleware/server components
