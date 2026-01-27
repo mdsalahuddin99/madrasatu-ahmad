@@ -1,18 +1,31 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
     Camera,
     ChevronLeft,
     ChevronRight,
     X,
-    PlayCircle
+    PlayCircle,
+    Loader2
 } from 'lucide-react';
-import { GALLERY_IMAGES } from '@/lib/constants';
+import { GALLERY_IMAGES, GALLERY_VIDEOS } from '@/lib/constants';
 import Image from 'next/image';
 
 export default function MediaGalleryPage() {
     const [selectedImage, setSelectedImage] = useState<number | null>(null);
     const [sliderIndex, setSliderIndex] = useState(0);
+    const [playingVideo, setPlayingVideo] = useState<number | null>(null);
+    const galleryScrollRef = useRef<HTMLDivElement>(null);
+
+    const scrollGallery = (direction: 'left' | 'right') => {
+        if (galleryScrollRef.current) {
+            const scrollAmount = 300;
+            galleryScrollRef.current.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    };
 
     const nextSlide = () =>
         setSliderIndex((p) => (p + 1) % GALLERY_IMAGES.length);
@@ -52,64 +65,43 @@ export default function MediaGalleryPage() {
             </div>
 
             <div className="container-custom py-16 md:py-24">
-                {/* 1. Highlight Grid */}
-                <section className="mb-24">
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-md bg-emerald-100 flex items-center justify-center text-emerald-700">
-                            <Camera size={20} />
-                        </div>
-                        <h2 className="text-2xl font-bold text-slate-900">হাইলাইট দৃশ্য</h2>
-                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                        <div className="md:col-span-12 lg:col-span-8 relative aspect-[16/9] rounded-md overflow-hidden group shadow-lg">
-                            <Image
-                                src={GALLERY_IMAGES[0].url}
-                                alt={GALLERY_IMAGES[0].caption}
-                                fill
-                                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                            />
-                            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
-                                <h3 className="text-white text-xl font-bold">{GALLERY_IMAGES[0].caption}</h3>
+
+                {/* 2. Photo Gallery Slider */}
+                <section className="mb-24 relative">
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-md bg-blue-100 flex items-center justify-center text-blue-700">
+                                <Camera size={20} />
                             </div>
+                            <h2 className="text-2xl font-bold text-slate-900">ছবি গ্যালারি</h2>
                         </div>
-
-                        <div className="md:col-span-12 lg:col-span-4 grid sm:grid-cols-2 lg:grid-cols-1 gap-6">
-                            {[1, 2].map((i) => (
-                                <div
-                                    key={GALLERY_IMAGES[i].id}
-                                    className="relative aspect-[4/3] rounded-md overflow-hidden group shadow-md"
-                                >
-                                    <Image
-                                        src={GALLERY_IMAGES[i].url}
-                                        alt={GALLERY_IMAGES[i].caption}
-                                        fill
-                                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                    />
-                                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                                        <h3 className="text-white font-bold text-sm">{GALLERY_IMAGES[i].caption}</h3>
-                                    </div>
-                                </div>
-                            ))}
+                        <div className="flex gap-2">
+                            <button 
+                                onClick={() => scrollGallery('left')}
+                                className="p-2 rounded-full bg-slate-100 hover:bg-emerald-100 text-slate-600 hover:text-emerald-600 transition-colors"
+                            >
+                                <ChevronLeft size={20} />
+                            </button>
+                            <button 
+                                onClick={() => scrollGallery('right')}
+                                className="p-2 rounded-full bg-slate-100 hover:bg-emerald-100 text-slate-600 hover:text-emerald-600 transition-colors"
+                            >
+                                <ChevronRight size={20} />
+                            </button>
                         </div>
                     </div>
-                </section>
 
-                {/* 2. Photo Grid */}
-                <section className="mb-24">
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-md bg-blue-100 flex items-center justify-center text-blue-700">
-                            <Camera size={20} />
-                        </div>
-                        <h2 className="text-2xl font-bold text-slate-900">ছবি গ্যালারি</h2>
-                    </div>
-
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+                    <div 
+                        ref={galleryScrollRef}
+                        className="flex gap-6 overflow-x-auto pb-8 snap-x scrollbar-hide mb-8"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    >
                         {GALLERY_IMAGES.map((img, index) => (
                             <div
                                 key={img.id}
                                 onClick={() => setSelectedImage(index)}
-                                className="group relative aspect-square rounded-md overflow-hidden bg-slate-100 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300"
+                                className="min-w-[280px] md:min-w-[320px] lg:min-w-[350px] aspect-square relative rounded-md overflow-hidden bg-slate-100 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 snap-center group shrink-0"
                             >
                                 <Image
                                     src={img.url}
@@ -119,52 +111,25 @@ export default function MediaGalleryPage() {
                                 />
                                 <div className="absolute inset-0 bg-emerald-900/0 group-hover:bg-emerald-900/20 transition-all duration-300" />
                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <X size={24} className="text-white rotate-45" />
+                                    <div className="bg-white/20 backdrop-blur-sm p-3 rounded-full text-white">
+                                        <Camera size={24} />
+                                    </div>
+                                </div>
+                                <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <p className="text-white text-sm font-medium">{img.caption}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
-                </section>
-
-                {/* 3. Slider Highlights */}
-                <section className="mb-24">
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-md bg-amber-100 flex items-center justify-center text-amber-700">
-                            <Camera size={20} />
-                        </div>
-                        <h2 className="text-2xl font-bold text-slate-900">হাইলাইট স্লাইডার</h2>
-                    </div>
-
-                    <div className="relative aspect-[21/9] rounded-md overflow-hidden shadow-2xl group">
-                        <Image
-                            src={GALLERY_IMAGES[sliderIndex].url}
-                            fill
-                            className="object-cover transition-all duration-700"
-                            alt="Slider Image"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-
-                        <div className="absolute bottom-8 left-8 text-white">
-                            <span className="text-emerald-400 font-bold text-xs uppercase tracking-widest mb-2 block">ছবি {sliderIndex + 1} / {GALLERY_IMAGES.length}</span>
-                            <h3 className="text-2xl md:text-3xl font-bold">{GALLERY_IMAGES[sliderIndex].caption}</h3>
-                        </div>
-
-                        <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button
-                                onClick={prevSlide}
-                                className="w-12 h-12 bg-white/20 backdrop-blur-md hover:bg-white/40 rounded-full flex items-center justify-center text-white transition-all transform hover:scale-110"
-                            >
-                                <ChevronLeft size={24} />
-                            </button>
-                            <button
-                                onClick={nextSlide}
-                                className="w-12 h-12 bg-white/20 backdrop-blur-md hover:bg-white/40 rounded-full flex items-center justify-center text-white transition-all transform hover:scale-110"
-                            >
-                                <ChevronRight size={24} />
-                            </button>
-                        </div>
+                    
+                    <div className="flex justify-center">
+                        <button className="px-8 py-3 bg-white border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 font-bold rounded-full transition-all shadow-sm hover:shadow-md">
+                            সব ছবি দেখুন
+                        </button>
                     </div>
                 </section>
+
+
 
                 {/* 4. Video Gallery */}
                 <section>
@@ -175,32 +140,30 @@ export default function MediaGalleryPage() {
                         <h2 className="text-2xl font-bold text-slate-900">ভিডিও গ্যালারি</h2>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-8">
-                        {[
-                            { title: 'ক্যাম্পাস ট্যুর', desc: 'আমাদের শিক্ষা প্রতিষ্ঠানের এক ঝলক' },
-                            { title: 'শিক্ষা কার্যক্রম', desc: 'শিক্ষার্থীদের ক্লাসরুম ও পড়াশোনা' }
-                        ].map((v, i) => (
+                    <div className="grid md:grid-cols-2 gap-8 mb-12">
+                        {GALLERY_VIDEOS.map((video) => (
                             <div
-                                key={i}
-                                className="relative aspect-video rounded-md bg-slate-950 overflow-hidden group cursor-pointer shadow-lg"
+                                key={video.id}
+                                className="relative aspect-video rounded-md bg-slate-950 overflow-hidden group shadow-lg"
                             >
-                                <Image
-                                    src={GALLERY_IMAGES[i + 1].url}
-                                    alt={v.title}
-                                    fill
-                                    className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-110"
+                                <div className="absolute inset-0 flex items-center justify-center bg-slate-100 z-0">
+                                    <Loader2 className="animate-spin text-emerald-600" size={32} />
+                                </div>
+                                <iframe
+                                    src={video.youtubeUrl}
+                                    className="w-full h-full relative z-10"
+                                    title={video.title}
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
                                 />
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white shadow-xl hover:scale-110 hover:bg-emerald-600 transition-all duration-300">
-                                        <PlayCircle size={32} fill="white" />
-                                    </div>
-                                </div>
-                                <div className="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
-                                    <h4 className="text-white font-bold text-lg">{v.title}</h4>
-                                    <p className="text-slate-300 text-sm">{v.desc}</p>
-                                </div>
                             </div>
                         ))}
+                    </div>
+
+                    <div className="flex justify-center">
+                        <button className="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                            আরো দেখুন
+                        </button>
                     </div>
                 </section>
             </div>

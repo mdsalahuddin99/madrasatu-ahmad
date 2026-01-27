@@ -1,4 +1,4 @@
-import { NavItem, Course, GalleryImage, ContactInfo, Stat } from './types';
+import { NavItem, Course, GalleryImage, GalleryVideo, ContactInfo, Stat } from './types';
 import { Zap, Camera, Dribbble, Home, Droplet, ShieldCheck, Users, GraduationCap, BookOpen, Trophy, Calendar, Award } from 'lucide-react';
 
 export const NAV_ITEMS: NavItem[] = [
@@ -59,6 +59,23 @@ export const GALLERY_IMAGES: GalleryImage[] = [
         url: '/assets/images/prayer_hall.png',
         caption: 'প্রার্থনা কক্ষ',
     },
+];
+
+export const GALLERY_VIDEOS: GalleryVideo[] = [
+    {
+        id: 1,
+        title: 'ক্যাম্পাস ট্যুর',
+        description: 'আমাদের শিক্ষা প্রতিষ্ঠানের এক ঝলক',
+        youtubeUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Placeholder
+        thumbnail: '/assets/images/campus.png'
+    },
+    {
+        id: 2,
+        title: 'বার্ষিক মাহফিল ২০২৪',
+        description: 'গত বছরের বার্ষিক মাহফিলের কিছু মুহূর্ত',
+        youtubeUrl: 'https://www.youtube.com/embed/lxO8F6aT2M', // Placeholder (invalid ID, need real one or generic)
+        thumbnail: '/assets/images/classroom.png'
+    }
 ];
 
 export const CONTACT_INFO: ContactInfo = {

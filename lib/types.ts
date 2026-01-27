@@ -17,6 +17,14 @@ export interface GalleryImage {
   caption: string;
 }
 
+export interface GalleryVideo {
+  id: number;
+  title: string;
+  description: string;
+  youtubeUrl: string;
+  thumbnail: string;
+}
+
 export interface ContactInfo {
   phone: string;
   email: string;

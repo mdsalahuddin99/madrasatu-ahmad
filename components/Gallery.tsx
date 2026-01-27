@@ -1,16 +1,17 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Camera } from 'lucide-react';
-import { GALLERY_IMAGES } from '@/lib/constants';
+import { Camera, Loader2, PlayCircle, ArrowRight } from 'lucide-react';
+import { GALLERY_IMAGES, GALLERY_VIDEOS } from '@/lib/constants';
 
 const Gallery: React.FC = () => {
   // Extract images for the marquee (using a larger set by duplicating for seamless loop)
   const marqueeImages = [...GALLERY_IMAGES, ...GALLERY_IMAGES, ...GALLERY_IMAGES];
 
   return (
-    <section id="gallery" className="py-20 lg:py-28 bg-white overflow-hidden">
+    <section id="gallery" className="py-16 bg-white overflow-hidden">
       <div className="container-custom">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
@@ -73,42 +74,47 @@ const Gallery: React.FC = () => {
               </motion.div>
             ))}
           </div>
+
+          <div className="flex justify-center mt-8">
+            <Link href="/gallery">
+                <button className="flex items-center gap-2 px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    আরো দেখুন <ArrowRight size={20} />
+                </button>
+            </Link>
+          </div>
         </div>
       </div>
 
-      {/* 2. Image Marquee Section (Bottom Section) */}
-      <div className="relative py-12 bg-slate-50 border-y border-slate-100 mt-10">
-        <div className="flex overflow-hidden group">
-          <motion.div
-            className="flex whitespace-nowrap gap-6"
-            animate={{
-              x: [0, "-50%"],
-            }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 40,
-                ease: "linear",
-              },
-            }}
-            style={{ display: "flex", width: "fit-content" }}
-          >
-            {/* Double the images for seamless loop */}
-            {[...marqueeImages, ...marqueeImages].map((img, idx) => (
-              <div
-                key={`marquee-${idx}`}
-                className="relative w-64 h-40 md:w-80 md:h-48 rounded-xl overflow-hidden shadow-md flex-shrink-0 border-2 border-white transform transition-transform hover:scale-105 duration-300"
-              >
-                <Image
-                  src={img.url}
-                  alt={img.caption}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </motion.div>
+      {/* 2. Video Gallery Section (Bottom Section) */}
+      <div className="relative py-12 bg-white border-y border-slate-100 mt-10">
+        <div className="container-custom mb-10 text-center">
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-800 text-sm font-bold uppercase tracking-wider mb-6 shadow-sm">
+            <PlayCircle size={16} />
+            <span>আমাদের ভিডিও গ্যালারি</span>
+          </div>
+            <h3 className="text-2xl font-bold text-emerald-800">আমাদের ভিডিও গ্যালারি</h3>
+            <p className="text-slate-600 mt-2">আমাদের কার্যক্রমের কিছু ভিডিও চিত্র</p>
+        </div>
+        <div className="container-custom">
+            <div className="grid md:grid-cols-2 gap-8">
+                {GALLERY_VIDEOS.map((video) => (
+                    <div
+                        key={video.id}
+                        className="relative aspect-video rounded-md bg-slate-950 overflow-hidden group shadow-lg"
+                    >
+                        <div className="absolute inset-0 flex items-center justify-center bg-slate-100 z-0">
+                            <Loader2 className="animate-spin text-emerald-600" size={32} />
+                        </div>
+                        <iframe
+                            src={video.youtubeUrl}
+                            className="w-full h-full relative z-10"
+                            title={video.title}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        />
+                    </div>
+                ))}
+            </div>
         </div>
       </div>
 

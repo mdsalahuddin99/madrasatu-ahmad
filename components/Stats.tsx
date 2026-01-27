@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
 import { motion, useMotionValue, animate, useInView } from 'framer-motion';
+import { Trophy } from 'lucide-react';
 import { STATS } from '@/lib/constants';
 
 const Counter = ({ value, duration = 2 }: { value: string; duration?: number }) => {
@@ -50,8 +51,22 @@ const Stats: React.FC = () => {
   ];
 
   return (
-    <section className="py-8 bg-white">
+    <section className="py-16 bg-white relative overflow-hidden">
       <div className="container-custom">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-sm font-bold uppercase tracking-wider mb-6">
+            <Trophy size={16} />
+            <span>আমাদের সাফল্য</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-heading font-bold text-slate-900 mb-6">
+            অর্জনের <span className="text-emerald-600">মাইলফলক</span>
+          </h2>
+          <p className="text-lg text-slate-600 leading-relaxed">
+            আল্লাহর অশেষ রহমতে আমরা প্রতিনিয়ত এগিয়ে যাচ্ছি। আমাদের বর্তমান অবস্থান ও সাফল্যের কিছু চিত্র।
+          </p>
+        </div>
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {STATS.slice(0, 4).map((stat, idx) => {
             const style = statStyles[idx % statStyles.length];
@@ -64,20 +79,15 @@ const Stats: React.FC = () => {
                 transition={{ delay: idx * 0.1 }}
                 className={`relative rounded-md overflow-hidden bg-gradient-to-b ${style.bg} border-t border-t-white shadow-sm hover:shadow-md transition-all p-3 py-6 flex flex-col items-center text-center group`}
               >
-                {/* Icon Container */}
-                <div className={`mb-4 w-12 h-12 rounded-full ${style.iconBg} border border-white shadow-sm flex items-center justify-center ${style.iconColor} transform group-hover:scale-110 transition-transform duration-300`}>
-                  <stat.icon size={20} />
+                <div className="relative z-10">
+                  <div className={`w-12 h-12 rounded-lg ${style.iconBg} flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300`}>
+                    <stat.icon size={24} className={style.iconColor} />
+                  </div>
+                  <h3 className={`text-4xl md:text-5xl font-bold font-heading mb-2 bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700`}>
+                    <Counter value={stat.value} />
+                  </h3>
+                  <p className="text-sm font-medium text-slate-600 uppercase tracking-wider">{stat.label}</p>
                 </div>
-
-                {/* Value with Counter */}
-                <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-1 tracking-tight">
-                  <Counter value={stat.value} />
-                </h3>
-
-                {/* Label */}
-                <p className="text-slate-500 font-bold text-sm">
-                  {stat.label}
-                </p>
               </motion.div>
             );
           })}

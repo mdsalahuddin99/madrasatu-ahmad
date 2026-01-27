@@ -50,8 +50,11 @@ const SLIDES = [
 
 const Hero: React.FC = () => {
   const [current, setCurrent] = useState(0);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
 
-  // Auto-play
+  // Video URL
+  const VIDEO_URL = "https://www.youtube.com/watch?v=xcJtL7QggTI";
+  const embedUrl = VIDEO_URL.replace("watch?v=", "embed/");
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % SLIDES.length);
@@ -87,50 +90,49 @@ const Hero: React.FC = () => {
       </AnimatePresence>
 
       {/* Content Content Container */}
-      <div className="container-custom relative z-10 w-full pt-32 lg:pt-40">
+      <div className="container-custom relative z-10 w-full pt-20 lg:pt-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="max-w-5xl space-y-8">
-            {/* Animated Text */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current}
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="space-y-6"
-              >
-                {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 backdrop-blur-md">
-                  <Star size={14} className="text-emerald-400" fill="currentColor" />
-                  <span className="text-xs md:text-sm font-bold text-emerald-100 tracking-wider uppercase">
-                    {SLIDES[current].badge}
-                  </span>
-                </div>
+            {/* Static Text */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="space-y-6"
+            >
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 backdrop-blur-md">
+                <Star size={14} className="text-emerald-400" fill="currentColor" />
+                <span className="text-xs md:text-sm font-bold text-emerald-100 tracking-wider uppercase">
+                  অভিভাবকদের প্রথম পছন্দ
+                </span>
+              </div>
 
-                {/* Title */}
-                <h1 className="text-2xl md:text-4xl lg:text-5xl font-heading font-bold text-white leading-tight">
-                  {SLIDES[current].title}
-                </h1>
+              {/* Title */}
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-heading font-bold text-white leading-tight">
+                সুন্নাহ ভিত্তিক জীবন ও আধুনিক শিক্ষার সমন্বয়
+              </h1>
 
-                {/* Subtitle */}
-                <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-xl">
-                  {SLIDES[current].subtitle}
-                </p>
+              {/* Subtitle */}
+              <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-xl">
+                আপনার সন্তানের উজ্জ্বল ভবিষ্যৎ গড়তে আমরা অঙ্গীকারবদ্ধ। এখানে দ্বীনি ও জাগতিক শিক্ষার এক অপূর্ব মেলবন্ধন ঘটে।
+              </p>
 
-                {/* Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <Link href="/admission" className="btn-primary">
-                    <span>{SLIDES[current].cta}</span>
-                    <ArrowRight size={18} />
-                  </Link>
-                  <button className="btn-secondary !bg-white/10 !text-white !border-white/20 hover:!bg-white/20">
-                    <PlayCircle size={18} />
-                    <span>ভিডিও দেখুন</span>
-                  </button>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Link href="/admission" className="btn-primary">
+                  <span>ভর্তি আবেদন করুন</span>
+                  <ArrowRight size={18} />
+                </Link>
+                <button 
+                  onClick={() => setIsVideoOpen(true)}
+                  className="btn-secondary bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm border border-white/20 px-8 py-4 rounded-xl font-medium transition-all flex items-center gap-2 justify-center group"
+                >
+                  <PlayCircle size={20} className="group-hover:scale-110 transition-transform" />
+                  <span>ভিডিও দেখুন</span>
+                </button>
+              </div>
+            </motion.div>
           </div>
 
           {/* Desktop Controls (Right Side Empty for Visuals, but we can put controls here) */}
@@ -175,6 +177,42 @@ const Hero: React.FC = () => {
       </div>
 
 
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {isVideoOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsVideoOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden shadow-2xl aspect-video"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setIsVideoOpen(false)}
+                className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors"
+              >
+                <ChevronRight className="hidden" /> {/* Dummy to keep import valid if needed, actually using X */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </button>
+              <iframe
+                src={`${embedUrl}?autoplay=1`}
+                title="Madrasatu Ahmad Video"
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </section>
   );

@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="py-10 lg:py-12 bg-[#fdfaf5] relative overflow-hidden">
+    <section id="about" className="py-16 bg-[#fdfaf5] relative overflow-hidden">
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `url('https://www.transparenttextures.com/patterns/arabesque.png')` }}></div>
 

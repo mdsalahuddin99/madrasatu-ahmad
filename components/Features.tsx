@@ -9,28 +9,28 @@ const Features: React.FC = () => {
     const themes = [
       { // 1. Emerald
         gradient: 'from-emerald-50/50 to-white',
-        border: 'border-emerald-100/50',
+        border: 'border-emerald-100/50 border-4',
         iconBg: 'bg-white',
         iconColor: 'text-emerald-600',
         btnHover: 'group-hover:text-emerald-700'
       },
       { // 2. Gold
         gradient: 'from-gold-50/50 to-white',
-        border: 'border-gold-100/50',
+        border: 'border-gold-100/50 border-4',
         iconBg: 'bg-white',
         iconColor: 'text-gold-600',
         btnHover: 'group-hover:text-gold-700'
       },
       { // 3. Emerald Dark
         gradient: 'from-emerald-50 to-white',
-        border: 'border-emerald-200/30',
+        border: 'border-emerald-200/30 border-4', 
         iconBg: 'bg-white',
         iconColor: 'text-emerald-700',
         btnHover: 'group-hover:text-emerald-800'
       },
       { // 4. Gold Dark
         gradient: 'from-gold-50 to-white',
-        border: 'border-gold-200/30',
+        border: 'border-gold-200/30 border-4', 
         iconBg: 'bg-white',
         iconColor: 'text-gold-700',
         btnHover: 'group-hover:text-gold-800'
@@ -40,7 +40,7 @@ const Features: React.FC = () => {
   };
 
   return (
-    <section className="py-10 bg-white overflow-hidden">
+    <section className="py-16 bg-white overflow-hidden">
       <div className="container-custom">
 
         {/* Header with Image Layout */}

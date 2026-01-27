@@ -25,7 +25,7 @@ const HifzSection: React.FC = () => {
   const embedUrl = getEmbedUrl(VIDEO_URL);
 
   return (
-    <section id="hifz" className="py-24 bg-slate-50 relative overflow-hidden">
+    <section id="hifz" className="py-16 bg-slate-50 relative overflow-hidden">
       <div className="container-custom relative z-10">
         <div className="flex flex-col lg:flex-row gap-16 items-center">
           <div className="lg:w-1/2 space-y-6 animate-fade-in-up">

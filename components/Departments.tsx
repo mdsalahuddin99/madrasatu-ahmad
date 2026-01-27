@@ -42,7 +42,7 @@ const CourseCard: React.FC<{ course: Course; index: number }> = ({ course, index
   const [error, setError] = useState(false);
 
   return (
-    <div className="group bg-white rounded-md border border-slate-200 p-5 transition-all duration-300 hover:shadow-xl flex flex-col h-full ring-1 ring-slate-100">
+    <div className="group mt-2 bg-white rounded-md border border-slate-200 p-5 transition-all duration-300 hover:shadow-xl flex flex-col h-full ring-1 ring-slate-100">
 
       {/* Image Container */}
       <div className="h-48 rounded-md overflow-hidden relative mb-5 shrink-0">
@@ -86,7 +86,7 @@ const CourseCard: React.FC<{ course: Course; index: number }> = ({ course, index
 
 const Departments: React.FC = () => {
   return (
-    <section id="departments" className="section-padding bg-gradient-to-b from-white to-cream-100 relative overflow-hidden">
+    <section id="departments" className="py-16 bg-slate-50 relative overflow-hidden">
       {/* Decorative Background */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute top-1/4 right-0 w-96 h-96 bg-emerald-200 rounded-full blur-3xl"></div>
