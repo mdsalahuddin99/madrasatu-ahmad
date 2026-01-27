@@ -119,14 +119,14 @@ const Hero: React.FC = () => {
               </p>
 
               {/* Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <div className="flex flex-wrap gap-4 pt-4">
                 <Link href="/admission" className="btn-primary">
                   <span>ভর্তি আবেদন করুন</span>
                   <ArrowRight size={18} />
                 </Link>
                 <button 
                   onClick={() => setIsVideoOpen(true)}
-                  className="btn-secondary bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm border border-white/20 px-8 py-4 rounded-xl font-medium transition-all flex items-center gap-2 justify-center group"
+                  className="btn-secondary bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm border border-white/20 px-5 py-2 md:px-6 md:py-3 rounded-full font-medium transition-all flex items-center gap-2 justify-center group"
                 >
                   <PlayCircle size={20} className="group-hover:scale-110 transition-transform" />
                   <span>ভিডিও দেখুন</span>
